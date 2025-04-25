@@ -21,6 +21,7 @@ function TaskModel({ closeshowmodel }) {
         }));
     };
     const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
 
             const response = await axios.post('http://localhost:8000/api/tasks', formdata)
@@ -29,7 +30,7 @@ function TaskModel({ closeshowmodel }) {
             setTimeout(() => {
                 setShowToast(false);
             }, 3000);
-            closeshowmodel();
+           
         } catch (error) {
             console.error('Error creating task:', error);
             setErrorMessage(
@@ -88,10 +89,10 @@ function TaskModel({ closeshowmodel }) {
                                     </label>
                                     <input
                                         type="text"
-                                        name="name"
+                                        name="projectname"
                                         value={formdata.projectname}
                                         onChange={handleChange}
-                                        id="name"
+                                        id="projectname"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="Project name"
                                         required
@@ -106,10 +107,10 @@ function TaskModel({ closeshowmodel }) {
                                     </label>
                                     <input
                                         type="text"
-                                        name="title"
+                                        name="projecttitle"
                                         value={formdata.projecttitle}
                                         onChange={handleChange}
-                                        id="title"
+                                        id="projecttitle"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="Project title"
                                         required
@@ -125,6 +126,7 @@ function TaskModel({ closeshowmodel }) {
                                     </label>
                                     <textarea
                                         id="description"
+                                        name='description'
                                         value={formdata.description}
                                         onChange={handleChange}
                                         rows="4"
@@ -157,6 +159,7 @@ function TaskModel({ closeshowmodel }) {
                                     </label>
                                     <input
                                         type="date"
+                                        name='opendate'
                                         value={formdata.opendate}
                                         onChange={handleChange}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -169,6 +172,7 @@ function TaskModel({ closeshowmodel }) {
                                     </label>
                                     <input
                                         type="date"
+                                        name='closedate'
                                         value={formdata.closedate}
                                         onChange={handleChange}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
