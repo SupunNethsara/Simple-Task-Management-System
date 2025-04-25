@@ -16,10 +16,12 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        Task::create([
-            'title' => $request->title,
-            'priority' => $request->priority
+        $request->validate([
+            'title' => 'required|string',
+            'priority' => 'in:low,medium,high'
         ]);
+
+        Task::create($request->all());
         return response()->json([], 201);
     }
 

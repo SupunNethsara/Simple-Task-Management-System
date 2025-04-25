@@ -23,4 +23,11 @@ class TaskTest extends TestCase
 
         $response->assertStatus(201);
     }
+    public function title_is_required()
+    {
+        $response = $this->postJson('/api/tasks', [
+            'priority' => 'high'
+        ]);
+        $response->assertStatus(422);
+    }
 }
