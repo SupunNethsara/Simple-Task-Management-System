@@ -3,8 +3,6 @@ import axios from 'axios';
 
 function TaskModel({closeshowmodel}) {
 
-
-
 const handleSubmit =()=>{
 
 }
