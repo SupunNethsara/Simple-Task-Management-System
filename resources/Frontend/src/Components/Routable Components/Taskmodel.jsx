@@ -9,7 +9,7 @@ function TaskModel({ closeshowmodel }) {
         projectname: '',
         projecttitle: '',
         description: '',
-        priority: '',
+        priority: 'medium',
         opendate: '',
         closedate: '',
     })
@@ -23,7 +23,7 @@ function TaskModel({ closeshowmodel }) {
     const handleSubmit = async (e) => {
         try {
 
-            const response = await axios.post('http://localhost:8000/api/.....', formdata)
+            const response = await axios.post('http://localhost:8000/api/tasks', formdata)
             console.log('Task created successfully:', response.data);
             setShowToast(true);
             setTimeout(() => {
