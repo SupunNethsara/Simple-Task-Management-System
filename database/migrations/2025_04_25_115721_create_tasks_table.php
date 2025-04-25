@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->date('open_date');
             $table->date('close_date');
+            $table->enum('status', ['Pending', 'Completed'])->default('Pending');
             $table->timestamps();
         });
     }

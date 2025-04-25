@@ -4,6 +4,7 @@ import TaskModel from './Taskmodel';
 import axios, { Axios } from 'axios';
 function Statics() {
     const [showmodel, SetShowModel] = useState(false);
+    const [tasks, setTasks] = useState([]);
     const [taskcount, setTaskCount] = useState(0);
     const handleshowmodel = () => {
         SetShowModel(!showmodel);
@@ -11,6 +12,20 @@ function Statics() {
     const closeshowmodel = () => {
         SetShowModel(false);
     }
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/tasks/gettask');
+                setTasks(response.data.data);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTasks();
+    }, []);
 
     useEffect(() => {
         const fetchCount = async () => {
@@ -19,7 +34,7 @@ function Statics() {
 
                 const response = await axios.get('http://localhost:8000/api/tasks/count');
                 setTaskCount(response.data.count)
-            } catch(error) {
+            } catch (error) {
                 console.error('Error fetching task count:', error);
             }
         }
@@ -109,29 +124,26 @@ function Statics() {
                             <h3 className="text-lg font-medium leading-6 text-gray-900">Recent Tasks</h3>
                         </div>
                         <div className="divide-y divide-gray-200">
+                            {tasks.map((task) => (
+                                <div key={task.id} className="px-4 py-4 sm:px-6 hover:bg-gray-50" >
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                            />
+                                          
+                                            <p className="ml-3 text-sm font-medium text-gray-900">{task.project_name}</p>
+                                        </div>
+                                        <div className="flex items-center text-sm text-gray-500">
+                                         
+                                        <span>{new Date(task.open_date).toLocaleDateString('en-US')}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                          
 
-                            <div className="px-4 py-4 sm:px-6 hover:bg-gray-50">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                        <input type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-                                        <p className="ml-3 text-sm font-medium text-gray-900">Complete project proposal</p>
-                                    </div>
-                                    <div className="flex items-center text-sm text-gray-500">
-                                        <span>Today, 5:00 PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="px-4 py-4 sm:px-6 hover:bg-gray-50">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                        <input type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
-                                        <p className="ml-3 text-sm font-medium text-gray-900">Review team tasks</p>
-                                    </div>
-                                    <div className="flex items-center text-sm text-gray-500">
-                                        <span>Tomorrow, 9:00 AM</span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
