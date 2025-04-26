@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class TaskController extends Controller
         $validated = $request->validated();
 
 
-       try{
+        try {
             $task = Task::create([
                 'project_name' => $validated['projectname'],
                 'title' => $validated['projecttitle'],
@@ -48,18 +49,19 @@ class TaskController extends Controller
                 'close_date' => $validated['closedate']
             ]);
             return response()->json([
-               'sucess'=>true,
+                'sucess' => true,
                 'message' => 'Task created successfully',
                 'data' => $task
-            ],201);
-       }catch (\Exception $e){
-           return response()->json([
-               'success' => false,
-               'message' => 'Failed to create task',
-               'error' => $e->getMessage()
-           ], 500);
-       }
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create task',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+
 
 
     public function show()
@@ -132,10 +134,7 @@ class TaskController extends Controller
     }
 
 
-    public function update(Request $request, string $id)
-    {
 
-    }
 
 
     public function destroy(string $id)
@@ -160,4 +159,35 @@ class TaskController extends Controller
         }
 
     }
+
+    public function update(UpdateTaskRequest $request, $id)
+    {
+        try {
+            $task = Task::findOrFail($id);
+
+            $validated = $request->validated();
+
+            $task->update([
+                'project_name' => $validated['projectname'],
+                'title' => $validated['projecttitle'],
+                'description' => $validated['description'],
+                'priority' => $validated['priority'],
+                'open_date' => $validated['opendate'],
+                'close_date' => $validated['closedate']
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Task updated successfully',
+                'task' => $task
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update task',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
+

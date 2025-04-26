@@ -10,3 +10,4 @@ Route::put('/tasks/{id}/complete', [\App\Http\Controllers\TaskController::class,
 Route::delete('/tasks/{id}/delete', [\App\Http\Controllers\TaskController::class, 'destroy']);
 Route::get('/tasks/getcount',[\App\Http\Controllers\TaskController::class,'completedcount']);
 Route::get('/tasks/completetask',[\App\Http\Controllers\TaskController::class,'getCompletedTasks']);
+Route::put('/tasks/{id}', [\App\Http\Controllers\TaskController::class, 'update']);
