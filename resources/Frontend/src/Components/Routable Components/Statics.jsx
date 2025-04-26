@@ -6,6 +6,7 @@ function Statics() {
     const [showmodel, SetShowModel] = useState(false);
     const [tasks, setTasks] = useState([]);
     const [taskcount, setTaskCount] = useState(0);
+    const [compltedcount, setCompletedCount] = useState(0);
     const handleshowmodel = () => {
         SetShowModel(!showmodel);
     }
@@ -34,12 +35,26 @@ function Statics() {
 
                 const response = await axios.get('http://localhost:8000/api/tasks/count');
                 setTaskCount(response.data.count)
+
             } catch (error) {
                 console.error('Error fetching task count:', error);
             }
         }
         fetchCount();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        const fetchCompletedCount = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/tasks/getcount');
+                setCompletedCount(response.data.count);
+                console.log("Count fetching done");
+            } catch (error) {
+                console.log('Error fetching Task Completed Count', error);
+            }
+        }
+        fetchCompletedCount();
+    }, []);
 
     return (
         <>
@@ -77,7 +92,7 @@ function Statics() {
                             <div className="ml-5 w-0 flex-1">
                                 <dt className="text-sm font-medium text-gray-500 truncate">Completed</dt>
                                 <dd className="flex items-baseline">
-                                    <div className="text-2xl font-semibold text-gray-900">12</div>
+                                    <div className="text-2xl font-semibold text-gray-900">{compltedcount}</div>
                                 </dd>
                             </div>
                         </div>
@@ -109,7 +124,7 @@ function Statics() {
                             <div className="ml-5 w-0 flex-1">
                                 <dt className="text-sm font-medium text-gray-500 truncate">Team Tasks</dt>
                                 <dd className="flex items-baseline">
-                                    <div className="text-2xl font-semibold text-gray-900">5</div>
+                                    <div className="text-2xl font-semibold text-gray-900">{taskcount}</div>
                                 </dd>
                             </div>
                         </div>
@@ -125,25 +140,20 @@ function Statics() {
                         </div>
                         <div className="divide-y divide-gray-200">
                             {tasks.map((task) => (
-                                <div key={task.id} className="px-4 py-4 sm:px-6 hover:bg-gray-50" >
+                                <div key={task.id} className="px-4 py-4 sm:px-6 hover:bg-gray-50">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center">
-                                            <input
-                                                type="checkbox"
-                                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                                            />
-                                          
+                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                                {task.status || 'Active'}
+                                            </span>
                                             <p className="ml-3 text-sm font-medium text-gray-900">{task.project_name}</p>
                                         </div>
                                         <div className="flex items-center text-sm text-gray-500">
-                                         
-                                        <span>{new Date(task.open_date).toLocaleDateString('en-US')}</span>
+                                            <span>{new Date(task.open_date).toLocaleDateString('en-US')}</span>
                                         </div>
                                     </div>
                                 </div>
                             ))}
-                          
-
                         </div>
                     </div>
                 </div>

@@ -27,8 +27,9 @@ function MyTask() {
       console.log(response.data);
       setTasks((prev) =>
         prev.map((task) =>
-          task.id === taskId ? { ...task, status: 'Completed' } : task
+          task.id === taskId ? { ...task, status: 'completed' } : task
         )
+        
       );
     } catch (error) {
       console.error('Error updating status:', error);
@@ -55,12 +56,11 @@ function MyTask() {
     }
   };
 
-  const getStatusIcon = (status) => {
-    return status === 'completed' 
-      ? <FiCheckCircle className="text-green-500" /> 
-      : <FiClock className="text-yellow-500" />;
-  };
-
+const getStatusIcon = (status) => {
+  return status.toLowerCase() === 'completed' 
+    ? <FiCheckCircle className="text-green-500" /> 
+    : <FiClock className="text-red-500" />;
+};
   return (
     <div className="p-6">
       <div className="mb-8 flex justify-between items-center">
