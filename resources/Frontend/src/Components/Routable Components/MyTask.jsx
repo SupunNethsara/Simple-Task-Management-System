@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { FiEdit, FiTrash2, FiCheckCircle, FiClock } from 'react-icons/fi';
 import axios from 'axios';
+import EditTaskModal from './EditTaskModal';
 
 function MyTask() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -97,7 +99,13 @@ function MyTask() {
                 </div>
 
                 <div className="flex justify-between border-t pt-4">
-                  <button className="text-indigo-600 hover:text-indigo-800 flex items-center">
+                  <button
+                    onClick={() => {
+                      setSelectedTask(task);
+                      setIsModalOpen(true);
+                    }}
+                    className="text-indigo-600 hover:text-indigo-800 flex items-center"
+                  >
                     <FiEdit className="mr-1" /> Edit
                   </button>
                   <button onClick={() => deletetask(task.id)} className="text-red-600 hover:text-red-800 flex items-center">
@@ -107,6 +115,12 @@ function MyTask() {
                     Completed
                   </button>
                 </div>
+                <EditTaskModal
+                  isOpen={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                  taskData={selectedTask}
+               
+                />
               </div>
             </div>
           ))}

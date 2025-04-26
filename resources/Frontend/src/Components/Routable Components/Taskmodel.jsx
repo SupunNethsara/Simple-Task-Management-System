@@ -24,7 +24,7 @@ function TaskModel({ closeshowmodel }) {
         e.preventDefault();
         try {
 
-            const response = await axios.post('http://localhost:8000/api/tasks', formdata)
+            const response = await axios.put('', formdata)
             console.log('Task created successfully:', response.data);
             setShowToast(true);
             setTimeout(() => {
