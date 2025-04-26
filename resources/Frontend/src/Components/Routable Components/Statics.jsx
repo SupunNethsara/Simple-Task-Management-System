@@ -7,6 +7,7 @@ function Statics() {
     const [tasks, setTasks] = useState([]);
     const [taskcount, setTaskCount] = useState(0);
     const [compltedcount, setCompletedCount] = useState(0);
+    const [completedTasks, setCompletedTasks] = useState([]);
     const handleshowmodel = () => {
         SetShowModel(!showmodel);
     }
@@ -54,6 +55,20 @@ function Statics() {
             }
         }
         fetchCompletedCount();
+    }, []);
+
+    useEffect(() => {
+        const fetchCompletedTasks = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/tasks/completetask');
+                setCompletedTasks(response.data);
+                console.log("Task fetching done");
+            } catch (error) {
+                console.log('Error fetching completed tasks', error);
+            }
+        };
+
+        fetchCompletedTasks();
     }, []);
 
     return (
@@ -164,22 +179,24 @@ function Statics() {
                             <h3 className="text-lg font-medium leading-6 text-gray-900">Activity Feed</h3>
                         </div>
                         <div className="divide-y divide-gray-200">
-
-                            <div className="px-4 py-4 sm:px-6">
-                                <div className="flex space-x-3">
-                                    <div className="flex-shrink-0">
-                                        <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-medium">
-                                            DL
+                            {completedTasks.map((task) => (
+                                <div key={task.id} className="px-4 py-4 sm:px-6">
+                                    <div className="flex space-x-3">
+                                        <div className="flex-shrink-0">
+                                            <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-medium">
+                                                SN
+                                            </div>
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-sm text-gray-800">
+                                                <span className="font-medium text-gray-900">You</span> completed "{task.project_name}"
+                                            </p>
+                                            <p className="text-sm text-gray-500">2 hours ago</p>
                                         </div>
                                     </div>
-                                    <div className="min-w-0 flex-1">
-                                        <p className="text-sm text-gray-800">
-                                            <span className="font-medium text-gray-900">You</span> completed "Design wireframes"
-                                        </p>
-                                        <p className="text-sm text-gray-500">2 hours ago</p>
-                                    </div>
                                 </div>
-                            </div>
+                            ))}
+
                         </div>
                     </div>
                 </div>

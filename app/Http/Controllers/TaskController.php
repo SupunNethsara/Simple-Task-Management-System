@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Models\Task;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
 
@@ -64,7 +65,7 @@ class TaskController extends Controller
     public function show()
     {
         try {
-            // Fetch all tasks
+
             $tasks = Task::all();
 
             return response()->json([
@@ -97,6 +98,37 @@ class TaskController extends Controller
             ], 404);
         }
 
+    }
+
+    public  function completedcount()
+    {
+       try{
+       $count = Task::where('status','completed')->count();
+
+       return response()->json([
+          'success'=>true,
+          'count'=>$count,
+       ]);
+       }
+       catch (\Exception $e){
+           return response()->json([
+               'success' => false,
+               'message' => 'Error counting completed tasks',
+               'error' => $e->getMessage()
+           ], 500);
+       }
+    }
+    public function getCompletedTasks()
+    {
+        try {
+            $tasks = Task::where('status', 'completed')->get();
+            return response()->json($tasks);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve completed tasks.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
 

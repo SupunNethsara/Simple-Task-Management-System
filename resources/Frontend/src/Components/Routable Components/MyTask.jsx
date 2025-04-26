@@ -23,26 +23,26 @@ function MyTask() {
 
   const markAsCompleted = async (taskId) => {
     try {
-     const response = await axios.put(`http://localhost:8000/api/tasks/${taskId}/complete`);
+      const response = await axios.put(`http://localhost:8000/api/tasks/${taskId}/complete`);
       console.log(response.data);
       setTasks((prev) =>
         prev.map((task) =>
           task.id === taskId ? { ...task, status: 'completed' } : task
         )
-        
+
       );
     } catch (error) {
       console.error('Error updating status:', error);
     }
   };
 
-  const deletetask = async(taskId)=>{
-    try{
-      const response =await axios.delete(`http://localhost:8000/api/tasks/${taskId}/delete`);
+  const deletetask = async (taskId) => {
+    try {
+      const response = await axios.delete(`http://localhost:8000/api/tasks/${taskId}/delete`);
       console.log(response.data);
-  
 
-    }catch(error){
+
+    } catch (error) {
       console.error('Error deleting task:', error);
     }
   }
@@ -56,16 +56,16 @@ function MyTask() {
     }
   };
 
-const getStatusIcon = (status) => {
-  return status.toLowerCase() === 'completed' 
-    ? <FiCheckCircle className="text-green-500" /> 
-    : <FiClock className="text-red-500" />;
-};
+  const getStatusIcon = (status) => {
+    return status.toLowerCase() === 'completed'
+      ? <FiCheckCircle className="text-green-500" />
+      : <FiClock className="text-red-500" />;
+  };
   return (
     <div className="p-6">
       <div className="mb-8 flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">My Task Dashboard</h2>
-       
+
       </div>
 
       {loading ? (
@@ -75,7 +75,7 @@ const getStatusIcon = (status) => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tasks.map((task) => (
-            <div 
+            <div
               key={task.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
             >
@@ -87,7 +87,7 @@ const getStatusIcon = (status) => {
                   </span>
                 </div>
                 <p className="text-gray-600 mb-4">{task.description}</p>
-                
+
                 <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                   <div className="flex items-center">
                     {getStatusIcon(task.status)}
@@ -100,11 +100,11 @@ const getStatusIcon = (status) => {
                   <button className="text-indigo-600 hover:text-indigo-800 flex items-center">
                     <FiEdit className="mr-1" /> Edit
                   </button>
-                  <button onClick={()=> deletetask(task.id)} className="text-red-600 hover:text-red-800 flex items-center">
+                  <button onClick={() => deletetask(task.id)} className="text-red-600 hover:text-red-800 flex items-center">
                     <FiTrash2 className="mr-1" /> Delete
                   </button>
-                  <button  onClick={() => markAsCompleted(task.id)} style={{borderRadius:'5px'}} className="text-white font-medium hover:bg-green-800 cursor-pointer bg-green-600  flex items-center p-1">
-                     Completed
+                  <button onClick={() => markAsCompleted(task.id)} style={{ borderRadius: '5px' }} className="text-white font-medium hover:bg-green-800 cursor-pointer bg-green-600  flex items-center p-1">
+                    Completed
                   </button>
                 </div>
               </div>

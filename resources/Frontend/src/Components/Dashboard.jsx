@@ -57,7 +57,7 @@ export default function Dashboard() {
                             <FiBell className="h-6 w-6" />
                         </button>
                         <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium">
-                            DL
+                            SN
                         </div>
                     </div>
                 </div>
