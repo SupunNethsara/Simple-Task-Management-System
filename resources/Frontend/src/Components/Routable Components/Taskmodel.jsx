@@ -24,18 +24,18 @@ function TaskModel({ closeshowmodel }) {
         e.preventDefault();
         try {
 
-            const response = await axios.put('', formdata)
+            const response = await axios.post('http://localhost:8000/api/tasks', formdata)
             console.log('Task created successfully:', response.data);
             setShowToast(true);
             setTimeout(() => {
                 setShowToast(false);
             }, 3000);
-           
+
         } catch (error) {
             console.error('Error creating task:', error);
             setErrorMessage(
-                error.response?.data?.message || 
-                error.message || 
+                error.response?.data?.message ||
+                error.message ||
                 'Failed to create task. Please try again.'
             );
             errorsetToast(true);

@@ -8,6 +8,7 @@ function MyTask() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -111,7 +112,7 @@ function MyTask() {
                   <button onClick={() => deletetask(task.id)} className="text-red-600 hover:text-red-800 flex items-center">
                     <FiTrash2 className="mr-1" /> Delete
                   </button>
-                  <button onClick={() => markAsCompleted(task.id)} style={{ borderRadius: '5px' }} className="text-white font-medium hover:bg-green-800 cursor-pointer bg-green-600  flex items-center p-1">
+                  <button onClick={() => markAsCompleted(task.id)} style={{ borderRadius: '5px' }} className="text-sm text-white font-medium hover:bg-green-800 cursor-pointer bg-green-600  flex items-center p-1">
                     Completed
                   </button>
                 </div>

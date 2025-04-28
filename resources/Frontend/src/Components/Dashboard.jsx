@@ -20,7 +20,7 @@ export default function Dashboard() {
             <header className="bg-white shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
                     <div className="flex items-center space-x-4">
-                      
+
                         <button
                             className="md:hidden p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                             onClick={toggleSidebar}
@@ -40,7 +40,7 @@ export default function Dashboard() {
                             </svg>
                         </button>
 
-                       
+
                         <div className="relative flex-1 max-w-md ml-10">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <FiSearch className="h-5 w-5 text-gray-400" />
